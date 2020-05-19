@@ -57,7 +57,7 @@ class Users(KeycloakAdminBase):
             data=json.dumps(payload, sort_keys=True)
         )
 
-    def all(self):
+    def all(self, max_results=100):
         """
         Return all registered users
 
@@ -66,7 +66,8 @@ class Users(KeycloakAdminBase):
         return self._client.get(
             url=self._client.get_full_url(
                 self.get_path('collection', realm=self._realm_name)
-            )
+            ),
+            max=max_results
         )
 
     def by_id(self, user_id):

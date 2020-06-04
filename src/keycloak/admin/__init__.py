@@ -15,7 +15,7 @@ class KeycloakAdminBase(object):
         self._client = client
 
     def get_path(self, name, **kwargs):
-        if self._paths is None:
+        if self._paths is None or (name not in self._paths):
             raise NotImplementedError()
 
         return self._paths[name].format(**kwargs)
@@ -35,9 +35,7 @@ class KeycloakAdmin(object):
         self._realm = realm
 
     def root(self):
-        return self.get(
-            self.get_full_url(self._paths['root'])
-        )
+        return self.get(self.get_full_url(self._paths['root']))
 
     def get_full_url(self, *args, **kwargs):
         return self._realm.client.get_full_url(*args, **kwargs)

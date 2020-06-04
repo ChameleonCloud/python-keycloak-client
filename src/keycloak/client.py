@@ -86,7 +86,7 @@ class KeycloakClient(object):
                 self.logger.debug(response.content)
                 self.logger.debug(response.headers)
                 self.logger.debug(response.request.headers)
-                raise KeycloakClientError(original_exc=err)
+                raise KeycloakClientError from err
 
             try:
                 return response.json()

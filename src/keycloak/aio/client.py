@@ -56,7 +56,7 @@ class KeycloakClient(AsyncInit, SyncKeycloakClient):
                                   'Response headers: {cre.headers}; '
                                   'Response status: {cre.status}; '
                                   'Content: {text}'.format(cre=cre, text=text))
-                raise KeycloakClientError from cre
+                raise KeycloakClientError(original_exc=cre)
 
             try:
                 result = await response.json(content_type=None)

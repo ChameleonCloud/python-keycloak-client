@@ -57,17 +57,20 @@ class Users(KeycloakAdminBase):
             data=json.dumps(payload, sort_keys=True)
         )
 
-    def all(self, max_results=100):
+    def all(self, **kwargs):
         """
         Return all registered users
 
         http://www.keycloak.org/docs-api/3.4/rest-api/index.html#_users_resource
         """
+        max_results = kwargs.pop('max_results', None)
+        if max_results:
+            kwargs.setdefault('max', max_results)
         return self._client.get(
             url=self._client.get_full_url(
                 self.get_path('collection', realm=self._realm_name)
             ),
-            max=max_results
+            **kwargs
         )
 
     def by_id(self, user_id):
